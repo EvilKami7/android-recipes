@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lesson_10.R
 import com.example.lesson_10.data.objects.Recipe
+import com.example.lesson_10.data.objects.Recipes
 import com.example.lesson_10.ui.mvp.details.MvpDetailsActivity
 
 class MvpMainActivity : AppCompatActivity(), IMainView {
@@ -30,7 +31,7 @@ class MvpMainActivity : AppCompatActivity(), IMainView {
         presenter = MvpMainPresenter(this)
     }
 
-    override fun showList(list: List<Recipe>) {
+    override fun showList(list: Recipes) {
         val recyclerView = findViewById<RecyclerView>(R.id.mvpMainRecycler)
         recyclerView.layoutManager = LinearLayoutManager(this)
         //TODO Adapter

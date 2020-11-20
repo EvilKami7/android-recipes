@@ -1,14 +1,17 @@
-package com.example.lesson_10.ui.mvvm.main
+package com.example.lesson_10.ui.mvvm.details
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.example.lesson_10.App
 import com.example.lesson_10.data.objects.Recipe
-import com.example.lesson_10.data.objects.Recipes
 
-class MvvmMainViewModel : ViewModel() {
+class MvvmDetailsViewModelFactory(private val uuid: String): ViewModelProvider.NewInstanceFactory() {
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T = MvvmDetailsViewModel(uuid) as T
+}
 
-    val recipeList = MutableLiveData<Recipes>()
+class MvvmDetailsViewModel(private val uuid: String): ViewModel() {
+    val recipe = MutableLiveData<Recipe>()
     val errorMessage = MutableLiveData<String>()
     val isLoading = MutableLiveData<Boolean>()
 
@@ -18,9 +21,9 @@ class MvvmMainViewModel : ViewModel() {
     }
 
     private fun fetchData() {
-        App.repository.fetchRecipeList(
+        App.repository.fetchRecipe(uuid,
             onResult = {
-                recipeList.postValue(it)
+                recipe.postValue(it)
                 isLoading.postValue(false)
             },
             onError = {

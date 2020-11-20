@@ -2,6 +2,10 @@ package com.example.lesson_10.data.objects
 
 import com.google.gson.annotations.SerializedName
 
+data class RecipeWrapper(
+    val recipe: Recipe
+)
+
 data class Recipe(
 
     @SerializedName("uuid")

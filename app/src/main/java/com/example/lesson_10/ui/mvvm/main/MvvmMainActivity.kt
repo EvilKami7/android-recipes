@@ -10,8 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lesson_10.R
-import com.example.lesson_10.ui.mvp.details.MvpDetailsActivity
 import com.example.lesson_10.ui.mvp.main.CustomAdapter
+import com.example.lesson_10.ui.mvvm.details.MvvmDetailsActivity
 
 class MvvmMainActivity : AppCompatActivity() {
 
@@ -29,8 +29,9 @@ class MvvmMainActivity : AppCompatActivity() {
             recyclerView.layoutManager = LinearLayoutManager(this)
             //TODO Adapter
             recyclerView.adapter = CustomAdapter(list, onClick = {
-                val intent = Intent(this, MvpDetailsActivity::class.java)
-                intent.putExtra("id", it)
+                val intent = Intent(this, MvvmDetailsActivity::class.java).apply {
+                    putExtra("id", list.recipes.elementAt(it).uuid)
+                }
                 startActivity(intent)
             })
         }
@@ -41,10 +42,10 @@ class MvvmMainActivity : AppCompatActivity() {
 
         mvvmMainViewModel.isLoading.observe(this) {
             if (it) {
-                findViewById<ProgressBar>(R.id.mvvmProgressBar).visibility = View.VISIBLE
+                findViewById<ProgressBar>(R.id.mvvmMainProgressBar).visibility = View.VISIBLE
                 findViewById<RecyclerView>(R.id.mvvmRecycler).visibility = View.GONE
             } else {
-                findViewById<ProgressBar>(R.id.mvvmProgressBar).visibility = View.GONE
+                findViewById<ProgressBar>(R.id.mvvmMainProgressBar).visibility = View.GONE
                 findViewById<RecyclerView>(R.id.mvvmRecycler).visibility = View.VISIBLE
             }
         }
